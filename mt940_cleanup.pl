@@ -14,8 +14,6 @@ sub removeAttach {
     for $i (0..$#in){
         @line = split(//, $in[$i]);  # split line into characters and put into array
         
-        
-        #print "@line + ", scalar(@line), "\n";
         if ((scalar(@line)) > 1) {
             
             @line = map {defined $_ ? $_ : 'NULL'} @line;
