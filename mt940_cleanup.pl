@@ -18,7 +18,7 @@ sub removeAttach {
             
             $start =join('', @line[0..3]);
             
-            print "$start\n";
+            print "line: $start\n";
             
 =pod
             if ($start eq ':20:') {
