@@ -16,9 +16,11 @@ sub removeAttach {
         
         if ((scalar(@line)) > 1) {
             
-            @line = map {defined $_ ? $_ : 'NULL'} @line;
             $start =join('', @line[0..3]);
             
+            print "$start\n";
+            
+=pod
             if ($start eq ':20:') {
                 #while ($start ne ':86:') {
                     
@@ -30,7 +32,7 @@ sub removeAttach {
             } elsif ($start eq 'Sume') {
                 print  "$in[$i]";            
             }
-            
+=cut
         }
     
     }
