@@ -33,9 +33,6 @@ sub removeAttach {
                 print  "$in[$i]";            
             }
             
-            
-            #print "@line[0..3]\n";
-            #print "=========\n";
         }
     
         
