@@ -19,28 +19,24 @@ sub removeAttach {
             if ((scalar(@line)) > 3) {
                 $start =join('', @line[0..3]);            
 
-                if ($start eq ':86:') {
-                    print  "$in[$i]";            
-                } elsif ($start eq 'Sume') {
-                    print  "$in[$i]";            
+                if ($start eq ':OS:') {
+                    $copy = 0;            
+                } elsif ($start eq ':20:'){
+                    print DATA2 "\n$in[$i]";
+                }else {
+                    print DATA2 $in[$i];
                 }
             }
         } else {
-            
             if ((scalar(@line)) > 3) {
                 $start =join('', @line[0..3]);            
 
                 if ($start eq ':20:') {
                     $copy = 1;
-                    print  "\n$in[$i]";
+                    print DATA2 "\n$in[$i]";
                 }
             }
         }
-        
-        
-        
-        
-        
     }
     
     close (DATA1);
