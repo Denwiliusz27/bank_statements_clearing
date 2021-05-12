@@ -39,7 +39,6 @@ sub removeAttach {
     
     close (DATA1);
     close (DATA2);
-
 }
 
 
