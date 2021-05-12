@@ -35,10 +35,6 @@ sub removeAttach {
             
         }
     
-        
-        #if ($item[0..3] eq ':20:') {
-        #    print "$item";   
-        #}
     }
     
     close (DATA1);
