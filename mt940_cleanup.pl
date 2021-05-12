@@ -10,11 +10,21 @@ sub removeAttach {
     open( DATA2, "> $out_file") or die "nie moge otworzyc pliku"; #open file to write;
     
     @in = <DATA1>;
-    $copy = 0;
+    #$copy = 0;
     
+     
     for $i (0..$#in){
         @line = split(//, $in[$i]);  # split line into characters and put into array
-        
+=begin         if (scalar(@line) <= 2) {
+            foreach $item (@line){
+                print ord($item), "\n";
+            }
+            print @line, "\n";
+            print "----\n";
+        }
+       
+=cut       
+      
         if ($copy) {  # when $copy is true then line is copied to output file
             if ((scalar(@line)) > 3) {
                 $start =join('', @line[0..3]);            
@@ -22,10 +32,12 @@ sub removeAttach {
                 if ($start eq ':OS:') {
                     $copy = 0;            
                 } elsif ($start eq ':20:'){
-                    print DATA2 "\n$in[$i]";
+                    print DATA2 $in[$i];
                 }else {
                     print DATA2 $in[$i];
                 }
+            } else {
+                print DATA2 $in[$i];
             }
         } else {
             if ((scalar(@line)) > 3) {
@@ -33,10 +45,11 @@ sub removeAttach {
 
                 if ($start eq ':20:') {
                     $copy = 1;
-                    print DATA2 "\n$in[$i]";
+                    print DATA2 "$in[$i]";
                 }
             }
         }
+
     }
     
     close (DATA1);
