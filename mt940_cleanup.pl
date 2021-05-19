@@ -28,7 +28,7 @@ sub removeAttach {
                 }
             }
             else {
-                if (not ((ord($line[0]) == 13 or ord($line[0]) == 10) or (ord($line[1]) == 13 or ord($line[1]) == 10))) {
+                if (not ((ord($line[0]) == 13 or ord($line[0]) == 10))) {
                     print DATA2 $in[$i];  
                 }              
             }
