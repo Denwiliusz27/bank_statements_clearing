@@ -13,7 +13,11 @@ sub removeAttach {
     $copy = 0;
      
     for $i (0..$#in){
-         @line = split(//, $in[$i]);  # split line into characters and put into array
+        @line = split(//, $in[$i]);  # split line into characters and put into array
+         
+         #$size = scalar @line;
+         #$asci = ord($line[-2..-1]);
+         #print "$size : $asci\n";
        
         if ($copy) {  # when $copy is true then line is copied to output file
             if ((scalar(@line)) > 3) {
@@ -22,7 +26,8 @@ sub removeAttach {
                 if ($start eq ':OS:') {
                     $copy = 0;            
                 } elsif ($start eq ':20:'){
-                    print DATA2 "\n$in[$i]";
+                    print DATA2 "$in[$i-1]";
+                    print DATA2 "$in[$i]";
                 }else {
                     print DATA2 $in[$i];
                 }
@@ -38,15 +43,18 @@ sub removeAttach {
 
                 if ($start eq ':20:') {
                     $copy = 1;
-                    print DATA2 "\n$in[$i]";
+                    print DATA2 "$in[$i-1]";
+                    print DATA2 "$in[$i]";
                 }
             }
         }
 
     }
     
+    
     close (DATA1);
     close (DATA2);
+
 }
 
 
