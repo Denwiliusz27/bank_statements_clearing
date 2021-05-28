@@ -14,10 +14,6 @@ sub removeAttach {
      
     for $i (0..$#in){
         @line = split(//, $in[$i]);  # split line into characters and put into array
-         
-         #$size = scalar @line;
-         #$asci = ord($line[-2..-1]);
-         #print "$size : $asci\n";
        
         if ($copy) {  # when $copy is true then line is copied to output file
             if ((scalar(@line)) > 3) {
@@ -48,9 +44,7 @@ sub removeAttach {
                 }
             }
         }
-
     }
-    
     
     close (DATA1);
     close (DATA2);
