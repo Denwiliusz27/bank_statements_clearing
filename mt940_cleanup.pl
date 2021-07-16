@@ -6,8 +6,13 @@ sub removeAttach {
     $in_file = $_[0];
     $out_file = $_[1];
     
-    open( DATA1, "< $in_file") or die "nie moge otworzyc pliku"; # open file to read
-    open( DATA2, "> $out_file") or die "nie moge otworzyc pliku"; #open file to write;
+    if ($in_file eq $out_file) {
+        $out_file = changeFileName($out_file);
+    }
+    
+    
+    open( DATA1, "< $in_file") or die "Cannot open first file"; # open file to read
+    open( DATA2, "> $out_file") or die "Cannot open second file"; #open file to write;
     
     @in = <DATA1>;
     $copy = 0;
@@ -25,6 +30,7 @@ sub removeAttach {
                     print DATA2 "$in[$i-1]";
                     print DATA2 "$in[$i]";
                 }else {
+                    #print "dodaje linie $i\n";
                     print DATA2 $in[$i];
                 }
             }
@@ -51,9 +57,48 @@ sub removeAttach {
 
 }
 
+sub changeFileName(){
+  
+    #print "oba pliki takie same\n";
+    #print "$in_file\n";
+        
+        
+    @filename = split(//, $in_file);
+        
+        
+    #print 'nowa nazwa:', @filename;
+    #print "\n";
+        
+    $filename[-3] = 't';
+    $filename[-2] = 'x';
+    $filename[-1] = 't';
+        
+    #print 'nowa nazwa:', @filename;
+    #print "\n";
+        
+    $length = scalar(@filename);
+    #print "dlugosc: ", $length;
+        
+    $out_file = join('',@filename[0..11]);
+    #print 'nowiusienka nazwa: ', $out_file;
+        #$out_file = $filename
+        
+    return $out_file;
+}
+
+
 
 sub main() {
     $subroutine = $ARGV[0];
+    
+    if ($subroutine ne 'removeAttach') {
+        print "Program name should be entered as first argument\n";
+    }
+    elsif (scalar(@ARGV) < 3) {
+        print "Name of second file should be entered\n";
+        return;
+    }
+    
     
     &$subroutine($ARGV[1], $ARGV[2]);
 }
