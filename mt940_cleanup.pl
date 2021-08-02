@@ -4,9 +4,10 @@ use feature 'state';
 sub removeAttach {
         
     $in_file = $_[0];
-    $out_file = $_[1];
+    $out_file = $_[1];    
     
     if ($in_file eq $out_file) {
+        $same = 1;
         $out_file = changeFileName($out_file);
     }
     
@@ -51,10 +52,13 @@ sub removeAttach {
             }
         }
     }
-    
+        
     close (DATA1);
     close (DATA2);
 
+    if ($same == 1){
+        rewriteFiles($in_file, $out_file);
+    }
 }
 
 sub changeFileName(){
@@ -76,10 +80,10 @@ sub changeFileName(){
     #print 'nowa nazwa:', @filename;
     #print "\n";
         
-    $length = scalar(@filename);
+    #$length = scalar(@filename);
     #print "dlugosc: ", $length;
         
-    $out_file = join('',@filename[0..11]);
+    $out_file = join('',@filename);
     #print 'nowiusienka nazwa: ', $out_file;
         #$out_file = $filename
         
@@ -87,15 +91,45 @@ sub changeFileName(){
 }
 
 
+sub rewriteFiles() {
+    $old_file = $_[0];
+    $created_file = $_[1];
+
+    open( DATA1, "< $created_file") or die "Cannot open first file"; # open file to read
+    open( DATA2, "> $old_file") or die "Cannot open second file"; #open file to write;
+    
+    @line = <DATA1>;
+    
+    for $i (0..$#line) {
+        print DATA2 @line;
+    }
+    
+    
+    
+    close (DATA1);
+    close (DATA2);
+    
+    unlink($created_file);
+}
+
+
+
 
 sub main() {
     $subroutine = $ARGV[0];
     
     if ($subroutine ne 'removeAttach') {
-        print "Program name should be entered as first argument\n";
+        print "Appropriate program name should be entered as first argument\n";
+        return;
     }
-    elsif (scalar(@ARGV) < 3) {
-        print "Name of second file should be entered\n";
+    
+    if (scalar(@ARGV) < 2) {
+        print "Minimum one name of file should be entered\n";
+        return;
+    }
+    elsif (scalar(@ARGV) == 2){
+        #print "podano te sama nazwe pliku\n";
+        &$subroutine($ARGV[1], $ARGV[1]);
         return;
     }
     
