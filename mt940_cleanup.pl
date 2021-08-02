@@ -63,9 +63,7 @@ sub removeAttach {
     close (DATA2);
 
     if ($same == 1){
-        
-        copy($out_file, $in_file);
-        
+        copy($out_file, $in_file); 
         unlink($out_file);
     }
 }
@@ -75,9 +73,11 @@ sub changeFileName(){
         
     @filename = split(//, $in_file);
      
+    $filename[-4] = '_'; 
     $filename[-3] = 't';
-    $filename[-2] = 'x';
-    $filename[-1] = 't';
+    $filename[-2] = 'e';
+    $filename[-1] = 's';
+    push @filename, 't';    
         
     $out_file = join('',@filename);
         
@@ -85,32 +85,7 @@ sub changeFileName(){
 }
 
 
-sub checkAsciiCodes() {
-    $in_file = $_[0];
-    open( DATA1, "< $in_file") or die "\nERROR: cannot open first file - inappropriate name of file, inappropriate or missing extension, or file doesn't exist.\n\n";
-    
-    @in = <DATA1>;
-    $copy = 0;
-     
-    for $i (0..$#in){
-        @line = split(//, $in[$i]);
-        
-        print "line ", $i, ": ";
-        for $j (0..$#line){
-            print ord($line[$j]);
-        }
-        
-        print "\n";
-    }
-    
-    close (DATA1);
-    
-}
-
-
 sub main() {
-    #&checkAsciiCodes($ARGV[1]);
-
     $subroutine = $ARGV[0];
     
     if (scalar(@ARGV) == 0) {
@@ -136,7 +111,7 @@ sub main() {
     }
         
     &$subroutine($ARGV[1], $ARGV[2]);
-    
+   
 }
 
 main();
