@@ -48,7 +48,11 @@ sub removeAttach {
 
                 if ($start eq ':20:') {
                     $copy = 1;
-                    #print DATA2 "$in[$i-1]";
+                    
+                    @tab = (chr(13), chr(10));
+                    $new_line = join("", @tab);
+                    
+                    print DATA2 $new_line;
                     print DATA2 "$in[$i]";
                 }
             }
@@ -81,7 +85,32 @@ sub changeFileName(){
 }
 
 
+sub checkAsciiCodes() {
+    $in_file = $_[0];
+    open( DATA1, "< $in_file") or die "\nERROR: cannot open first file - inappropriate name of file, inappropriate or missing extension, or file doesn't exist.\n\n";
+    
+    @in = <DATA1>;
+    $copy = 0;
+     
+    for $i (0..$#in){
+        @line = split(//, $in[$i]);
+        
+        print "line ", $i, ": ";
+        for $j (0..$#line){
+            print ord($line[$j]);
+        }
+        
+        print "\n";
+    }
+    
+    close (DATA1);
+    
+}
+
+
 sub main() {
+    #&checkAsciiCodes($ARGV[1]);
+
     $subroutine = $ARGV[0];
     
     if (scalar(@ARGV) == 0) {
@@ -107,6 +136,7 @@ sub main() {
     }
         
     &$subroutine($ARGV[1], $ARGV[2]);
+    
 }
 
 main();
